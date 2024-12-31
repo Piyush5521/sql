@@ -1,0 +1,173 @@
+/*
+SQLyog Community v13.1.8 (64 bit)
+MySQL - 8.0.40-0ubuntu0.22.04.1 : Database - company
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`company` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+
+USE `company`;
+
+/*Table structure for table `department` */
+
+DROP TABLE IF EXISTS `department`;
+
+CREATE TABLE `department` (
+  `d_id` int DEFAULT NULL,
+  `d_name` varchar(255) DEFAULT NULL,
+  `d_location` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `department` */
+
+insert  into `department`(`d_id`,`d_name`,`d_location`) values 
+(1,'Sales','New York'),
+(2,'IT','California'),
+(3,'QA','LOS Angles'),
+(4,'Tech','Washington DC'),
+(5,'Finance','LOS Santos'),
+(6,'HR','LOS Venture');
+
+/*Table structure for table `employee` */
+
+DROP TABLE IF EXISTS `employee`;
+
+CREATE TABLE `employee` (
+  `e_id` int NOT NULL,
+  `e_name` varchar(20) DEFAULT NULL,
+  `e_salary` int DEFAULT NULL,
+  `e_age` int DEFAULT NULL,
+  `e_gender` varchar(20) DEFAULT NULL,
+  `e_dept` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`e_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `employee` */
+
+insert  into `employee`(`e_id`,`e_name`,`e_salary`,`e_age`,`e_gender`,`e_dept`) values 
+(1,'Tom',18000,25,'Male','IT'),
+(2,'Sam',19000,27,'Male','QA'),
+(3,'Jack',22000,28,'Male','Tech'),
+(4,'Jessy',18000,26,'Female','Tech'),
+(5,'New',16000,25,'Female','Designer'),
+(8,'Jeff',21000,27,'Male','Tech');
+
+/*Table structure for table `employee_s` */
+
+DROP TABLE IF EXISTS `employee_s`;
+
+CREATE TABLE `employee_s` (
+  `e_id` int NOT NULL,
+  `e_name` varchar(255) DEFAULT NULL,
+  `e_salary` int DEFAULT NULL,
+  `e_age` int DEFAULT NULL,
+  `e_gender` varchar(255) DEFAULT NULL,
+  `e_dept` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `employee_s` */
+
+insert  into `employee_s`(`e_id`,`e_name`,`e_salary`,`e_age`,`e_gender`,`e_dept`) values 
+(1,'Tom',17000,25,'Male','IT'),
+(2,'Sam',19000,27,'Male','QA'),
+(3,'Jack',23000,28,'Male','Tech'),
+(6,'Jeff',21000,27,'Male','Tech'),
+(7,'Jen',20000,26,'Female','Designer'),
+(8,'Anne',19000,25,'Female','Tech');
+
+/*Table structure for table `student_details1` */
+
+DROP TABLE IF EXISTS `student_details1`;
+
+CREATE TABLE `student_details1` (
+  `s_id` int NOT NULL,
+  `s_name` varchar(255) DEFAULT NULL,
+  `s_marks` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `student_details1` */
+
+insert  into `student_details1`(`s_id`,`s_name`,`s_marks`) values 
+(1,'Sam',45),
+(2,'Bob',87),
+(3,'Anne',73),
+(4,'Julia',92);
+
+/*Table structure for table `student_details2` */
+
+DROP TABLE IF EXISTS `student_details2`;
+
+CREATE TABLE `student_details2` (
+  `s_id` int NOT NULL,
+  `s_name` varchar(255) DEFAULT NULL,
+  `s_marks` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `student_details2` */
+
+insert  into `student_details2`(`s_id`,`s_name`,`s_marks`) values 
+(3,'Anne',73),
+(4,'Julia',92),
+(5,'Matt',65);
+
+/* Function  structure for function  `add_five` */
+
+/*!50003 DROP FUNCTION IF EXISTS `add_five` */;
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` FUNCTION `add_five`(num INT) RETURNS int
+    DETERMINISTIC
+BEGIN
+    RETURN num + 5;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `select_gender` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `select_gender` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `select_gender`(IN gender VARCHAR(20))
+BEGIN
+    SELECT * FROM employee WHERE e_gender = gender;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `employee_age` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `employee_age` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `employee_age`()
+BEGIN
+    SELECT e_Age FROM employee;
+END */$$
+DELIMITER ;
+
+/* Procedure structure for procedure `employee_gender` */
+
+/*!50003 DROP PROCEDURE IF EXISTS  `employee_gender` */;
+
+DELIMITER $$
+
+/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `employee_gender`(IN gender VARCHAR(20))
+BEGIN
+    SELECT * FROM employee
+    WHERE e_gender = gender;
+END */$$
+DELIMITER ;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
