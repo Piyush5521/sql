@@ -147,7 +147,7 @@ CREATE TABLE `Messages` (
   KEY `chat_id` (`chat_id`),
   CONSTRAINT `Messages_ibfk_1` FOREIGN KEY (`chat_id`) REFERENCES `Chats` (`chat_id`),
   CONSTRAINT `Messages_ibfk_2` FOREIGN KEY (`chat_id`) REFERENCES `Chats` (`chat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +156,7 @@ CREATE TABLE `Messages` (
 
 LOCK TABLES `Messages` WRITE;
 /*!40000 ALTER TABLE `Messages` DISABLE KEYS */;
-INSERT INTO `Messages` VALUES (1,1,1,'Hii',0,NULL,'2025-01-03 15:25:32',0),(2,2,2,'Hello',0,'welcome.png','2024-12-29 15:25:32',0),(3,3,2,'Hey, what\'s up!',0,NULL,'2025-01-03 15:25:32',0),(4,2,3,'Hii',0,NULL,'2025-01-03 15:25:32',3),(5,2,4,'Hello',0,NULL,'2025-01-06 15:25:32',3),(6,2,5,'Hey',0,NULL,'2025-01-03 15:25:32',3),(7,4,6,'Welcome',0,'meme.jpg','2025-01-06 15:25:32',0),(8,2,7,'Hi',0,NULL,'2025-01-06 17:25:49',3),(9,2,8,'Hey',0,NULL,'2025-01-06 17:26:33',3);
+INSERT INTO `Messages` VALUES (1,1,1,'Hii',0,NULL,'2025-01-03 15:25:32',0),(2,2,2,'Hello',0,'welcome.png','2024-12-29 15:25:32',0),(3,3,2,'Hey, what\'s up!',0,NULL,'2025-01-03 15:25:32',0),(4,2,3,'Hii',0,NULL,'2025-01-03 15:25:32',3),(5,2,4,'Hello',0,NULL,'2025-01-06 15:25:32',3),(6,2,5,'Hey',0,NULL,'2025-01-03 15:25:32',3),(7,4,6,'Welcome',0,'meme.jpg','2025-01-06 15:25:32',0),(8,2,7,'Hi',0,NULL,'2025-01-06 17:25:49',3),(9,2,8,'Hey',0,NULL,'2025-01-06 17:26:33',3),(10,2,2,'Thank You ForJoining',0,NULL,'2025-01-07 10:22:24',0);
 /*!40000 ALTER TABLE `Messages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -190,6 +190,36 @@ INSERT INTO `Permissions` VALUES (1,'admin',1,1,1,1),(2,'member',0,0,1,0),(3,'us
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Pinned_Messages`
+--
+
+DROP TABLE IF EXISTS `Pinned_Messages`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Pinned_Messages` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `group_id` int NOT NULL,
+  `message_id` int NOT NULL,
+  `pinned_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `group_id` (`group_id`),
+  KEY `message_id` (`message_id`),
+  CONSTRAINT `Pinned_Messages_ibfk_1` FOREIGN KEY (`group_id`) REFERENCES `Group_table` (`id`),
+  CONSTRAINT `Pinned_Messages_ibfk_2` FOREIGN KEY (`message_id`) REFERENCES `Messages` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Pinned_Messages`
+--
+
+LOCK TABLES `Pinned_Messages` WRITE;
+/*!40000 ALTER TABLE `Pinned_Messages` DISABLE KEYS */;
+INSERT INTO `Pinned_Messages` VALUES (1,1,2,'2025-01-07 04:46:34'),(2,1,10,'2025-01-07 04:52:54');
+/*!40000 ALTER TABLE `Pinned_Messages` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `Read_Receipts`
 --
 
@@ -217,6 +247,36 @@ LOCK TABLES `Read_Receipts` WRITE;
 /*!40000 ALTER TABLE `Read_Receipts` DISABLE KEYS */;
 INSERT INTO `Read_Receipts` VALUES (1,1,1,'2025-01-03 09:30:32'),(2,3,4,NULL),(3,4,5,'2025-01-06 07:32:52'),(4,5,6,NULL),(5,2,2,'2025-01-06 07:46:06');
 /*!40000 ALTER TABLE `Read_Receipts` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `Typing_Indicators`
+--
+
+DROP TABLE IF EXISTS `Typing_Indicators`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `Typing_Indicators` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `chat_id` int NOT NULL,
+  `is_typing` tinyint(1) DEFAULT '0',
+  `last_updated` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY `user_id` (`user_id`),
+  KEY `chat_id` (`chat_id`),
+  CONSTRAINT `Typing_Indicators_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `Users` (`user_id`),
+  CONSTRAINT `Typing_Indicators_ibfk_2` FOREIGN KEY (`chat_id`) REFERENCES `Group_table` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Typing_Indicators`
+--
+
+LOCK TABLES `Typing_Indicators` WRITE;
+/*!40000 ALTER TABLE `Typing_Indicators` DISABLE KEYS */;
+INSERT INTO `Typing_Indicators` VALUES (1,2,2,1,'2025-01-07 05:10:01');
+/*!40000 ALTER TABLE `Typing_Indicators` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -255,4 +315,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-01-06 19:05:49
+-- Dump completed on 2025-01-07 10:55:29
